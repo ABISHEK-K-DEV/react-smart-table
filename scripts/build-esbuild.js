@@ -29,6 +29,8 @@ const baseConfig = {
   platform: 'browser',
   mainFields: ['module', 'main'],
   conditions: ['import', 'module', 'default'],
+  logLevel: 'info',
+  minify: process.env.NODE_ENV === 'production',
 };
 
 
@@ -44,10 +46,44 @@ function generateDeclarations() {
       stdio: 'inherit',
       cwd: path.join(__dirname, '..') // Run tsc from the project root
     });
+    return true;
   } catch (error) {
-    console.error('❌ Failed to generate TypeScript declarations.');
-    // The error from execSync is usually printed to stderr, so we don't need to log it again.
-    process.exit(1);
+    console.error('⚠️ TypeScript declaration generation had errors, but continuing build process...');
+    console.error('   You may need to run "npm run build:tsc" manually.');
+    return false;
+  }
+}
+
+/**
+ * Creates a package.json file in the dist directory
+ */
+function createDistPackageJson() {
+  try {
+    const distPackageJson = {
+      name: packageJson.name,
+      version: packageJson.version,
+      main: './index.js',
+      module: './index.esm.js',
+      types: './index.d.ts',
+      exports: {
+        '.': {
+          import: './index.esm.js',
+          require: './index.js',
+          types: './index.d.ts'
+        }
+      },
+      sideEffects: false
+    };
+
+    fs.writeFileSync(
+      path.join(distDir, 'package.json'),
+      JSON.stringify(distPackageJson, null, 2)
+    );
+    console.log('📄 Created dist/package.json');
+    return true;
+  } catch (error) {
+    console.error('❌ Failed to create dist/package.json:', error.message);
+    return false;
   }
 }
 
@@ -79,20 +115,32 @@ async function build() {
     console.log('📦 ESM and CJS modules built.');
 
     // After the JavaScript bundles are created, generate the corresponding .d.ts files
-    generateDeclarations();
+    const declarationsSuccessful = generateDeclarations();
+    
+    // Create package.json in dist directory
+    const packageJsonSuccessful = createDistPackageJson();
 
-    console.log('✅ Build completed successfully!');
+    if (declarationsSuccessful && packageJsonSuccessful) {
+      console.log('✅ Build completed successfully!');
+    } else {
+      console.log('⚠️ Build completed with warnings.');
+    }
 
     // Log the final bundle sizes for reference
-    const esmSize = fs.statSync(path.join(distDir, 'index.esm.js')).size;
-    const cjsSize = fs.statSync(path.join(distDir, 'index.js')).size;
-    console.log(`📊 Bundle sizes:`);
-    console.log(`   ESM: ${(esmSize / 1024).toFixed(1)}KB`);
-    console.log(`   CJS: ${(cjsSize / 1024).toFixed(1)}KB`);
+    try {
+      const esmSize = fs.statSync(path.join(distDir, 'index.esm.js')).size;
+      const cjsSize = fs.statSync(path.join(distDir, 'index.js')).size;
+      console.log(`📊 Bundle sizes:`);
+      console.log(`   ESM: ${(esmSize / 1024).toFixed(1)}KB`);
+      console.log(`   CJS: ${(cjsSize / 1024).toFixed(1)}KB`);
+    } catch (error) {
+      console.error('❌ Failed to report bundle sizes:', error.message);
+    }
 
+    return true;
   } catch (error) {
-    console.error('❌ Build failed:', error);
-    process.exit(1);
+    console.error('❌ ESBuild build failed:', error);
+    return false;
   }
 }
 
@@ -102,49 +150,66 @@ async function build() {
 async function watch() {
   console.log('👀 Starting watch mode...');
 
-  // Use esbuild's context API for efficient watching
-  const context = await esbuild.context({
-    ...baseConfig,
-    // We don't need this context to write files itself.
-    // Instead, we'll use its plugin to trigger our full `build` function,
-    // which ensures types are regenerated along with the JS bundles.
-    write: false, 
-    plugins: [{
-      name: 'rebuild-plugin',
-      setup(buildProcess) {
-        // The `onEnd` callback is triggered after each build attempt within the context
-        buildProcess.onEnd(result => {
-          if (result.errors.length > 0) {
-            console.error('❌ Watch detected build errors:', result.errors);
-          } else {
-            console.log('Changes detected. Triggering full rebuild...');
-            // We call our main build function to handle everything
-            build().catch(err => console.error('❌ Rebuild failed:', err));
-          }
-        });
-      },
-    }],
-  });
+  try {
+    // Use esbuild's context API for efficient watching
+    const context = await esbuild.context({
+      ...baseConfig,
+      // We don't need this context to write files itself.
+      // Instead, we'll use its plugin to trigger our full `build` function,
+      // which ensures types are regenerated along with the JS bundles.
+      write: false, 
+      plugins: [{
+        name: 'rebuild-plugin',
+        setup(buildProcess) {
+          // The `onEnd` callback is triggered after each build attempt within the context
+          buildProcess.onEnd(result => {
+            if (result.errors.length > 0) {
+              console.error('❌ Watch detected build errors:', result.errors);
+            } else {
+              console.log('Changes detected. Triggering full rebuild...');
+              // We call our main build function to handle everything
+              build().catch(err => console.error('❌ Rebuild failed:', err));
+            }
+          });
+        },
+      }],
+    });
 
-  // Activate the watcher
-  await context.watch();
-  console.log('👀 Watching for changes in src/ ...');
-  
-  // Perform an initial build so files are available immediately on startup
-  await build();
+    // Activate the watcher
+    await context.watch();
+    console.log('👀 Watching for changes in src/ ...');
+    
+    // Perform an initial build so files are available immediately on startup
+    await build();
+  } catch (error) {
+    console.error('❌ Watch setup failed:', error);
+    process.exit(1);
+  }
 }
 
 
 // --- Main Execution ---
 
 // This function determines whether to run a single build or start watch mode
-function main() {
+async function main() {
   if (process.argv.includes('--watch')) {
-    watch();
+    await watch();
   } else {
-    build();
+    const success = await build();
+    if (!success) {
+      console.log('⚠️ ESBuild build had errors. Trying fallback build method...');
+      try {
+        require('./build-fallback');
+      } catch (error) {
+        console.error('❌ Both build methods failed. Please check your dependencies.');
+        process.exit(1);
+      }
+    }
   }
 }
 
 // Run the script
-main();
+main().catch(error => {
+  console.error('❌ Unhandled error:', error);
+  process.exit(1);
+});

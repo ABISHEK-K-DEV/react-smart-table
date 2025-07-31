@@ -15,13 +15,20 @@ if (!fs.existsSync(distPath)) {
 // Check critical dependencies
 const packageJson = require('../package.json');
 const criticalDeps = [
+  'esbuild',
+  'typescript',
+];
+
+// Optional dependencies to check - we need at least one bundler to work
+const optionalDeps = [
   '@rollup/plugin-node-resolve',
   '@rollup/plugin-commonjs',
   '@rollup/plugin-typescript',
   'rollup'
 ];
 
-let allDepsFound = true;
+let mandatoryDepsFound = true;
+let foundOptionalDeps = false;
 
 criticalDeps.forEach(dep => {
   try {
@@ -29,14 +36,27 @@ criticalDeps.forEach(dep => {
     console.log(`✅ ${dep} found`);
   } catch (error) {
     console.log(`❌ ${dep} missing`);
-    allDepsFound = false;
+    mandatoryDepsFound = false;
   }
 });
 
-if (allDepsFound) {
-  console.log('🎉 All build dependencies are ready!');
+optionalDeps.forEach(dep => {
+  try {
+    require.resolve(dep);
+    console.log(`✅ ${dep} found`);
+    foundOptionalDeps = true;
+  } catch (error) {
+    console.log(`ℹ️ ${dep} not found (optional)`);
+  }
+});
+
+if (mandatoryDepsFound) {
+  console.log('🎉 All mandatory build dependencies are ready!');
+  if (!foundOptionalDeps) {
+    console.log('⚠️ No optional bundlers found. Will use TypeScript compiler directly.');
+  }
   process.exit(0);
 } else {
-  console.log('⚠️  Some dependencies are missing. Run npm install again.');
+  console.log('⚠️ Some dependencies are missing. Run npm install again.');
   process.exit(1);
 }

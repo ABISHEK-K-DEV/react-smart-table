@@ -54,9 +54,10 @@
   },
   "homepage": "https://github.com/ABISHEK-K-DEV/react-smart-table#readme",
   "scripts": {
-    "build": "npm run clean && npm run build:esbuild",
+    "build": "npm run clean && node scripts/build-esbuild.js || npm run build:fallback",
     "build:esbuild": "node scripts/build-esbuild.js",
     "build:rollup": "rollup -c",
+    "build:fallback": "node scripts/build-fallback.js",
     "build:tsc": "tsc --project tsconfig.json",
     "dev": "npm run build:esbuild -- --watch",
     "test": "jest",
@@ -75,7 +76,7 @@
     "example:dev": "cd examples/basic && npm run dev",
     "docs:build": "typedoc src/index.ts",
     "size": "size-limit",
-    "analyze": "rollup -c --bundleConfigAsCjs --environment ANALYZE",
+    "analyze": "esbuild src/index.ts --bundle --minify --sourcemap --analyze --outfile=dist/bundle-analyze.js || rollup -c --bundleConfigAsCjs --environment ANALYZE",
     "build:check": "node scripts/build-check.js",
     "postinstall": "node scripts/build-check.js || echo 'Build check skipped'"
   },

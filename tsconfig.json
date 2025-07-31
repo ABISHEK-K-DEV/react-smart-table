@@ -19,9 +19,14 @@
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "rootDir": "src",
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "composite": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*"
