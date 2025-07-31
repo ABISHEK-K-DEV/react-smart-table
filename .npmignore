@@ -1,0 +1,104 @@
+# Source files
+src/
+*.tsx
+*.ts
+!dist/**/*.d.ts
+
+# Development files
+.github/
+examples/
+docs/
+tests/
+__tests__/
+**/*.test.*
+**/*.spec.*
+**/*.stories.*
+
+# Configuration files
+.eslintrc.*
+.prettierrc.*
+.babelrc.*
+tsconfig.json
+rollup.config.js
+postcss.config.js
+tailwind.config.js
+jest.config.js
+
+# Development dependencies
+node_modules/
+.npm/
+.yarn/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.travis.yml
+.circleci/
+
+# Documentation source
+README.dev.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+
+# Environment files
+.env*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.rollup.cache/
+
+# Optional npm cache directory
+.npm/
+
+# Build artifacts that shouldn't be published
+build/
+lib/
+temp/
+tmp/
+
+# Package manager lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Only include essential files in npm package:
+# - dist/ (built files)
+# - README.md
+# - LICENSE
+# - package.json
+# - CHANGELOG.md
+# - SECURITY.md

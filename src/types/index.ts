@@ -23,12 +23,14 @@ export interface TableRow {
 }
 
 export interface AIConfig {
-  apiKey: string;
-  provider: 'openai' | 'gemini';
+  apiEndpoint: string; // Secure API endpoint instead of exposing keys
+  provider: 'openai' | 'gemini' | 'custom';
   model?: string;
   temperature?: number;
   maxTokens?: number;
   enabled?: boolean;
+  rateLimitPerMinute?: number;
+  maxBulkSize?: number;
 }
 
 export interface ValidationSchema {
