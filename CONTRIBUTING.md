@@ -53,7 +53,7 @@ Thank you for your interest in contributing to React Smart Table! We welcome con
 ### Code Style
 
 - Use TypeScript for all new code
-- Follow the existing ESLint configuration
+- Follow the existing coding style
 - Use Prettier for code formatting
 - Write clear, descriptive commit messages
 

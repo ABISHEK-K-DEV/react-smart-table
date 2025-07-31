@@ -170,19 +170,25 @@ export const importFromCSV = (
                 // Security: Type validation based on column type
                 switch (col.type) {
                   case 'number':
-                    const num = parseFloat(String(value));
-                    tableRow[col.id] = isNaN(num) ? 0 : num;
+                    {
+                      const formattedValue = Number(value).toLocaleString();
+                      tableRow[col.id] = formattedValue;
+                    }
                     break;
                   case 'boolean':
-                    tableRow[col.id] = ['true', '1', 'yes', 'on'].includes(String(value).toLowerCase());
+                    {
+                      tableRow[col.id] = ['true', '1', 'yes', 'on'].includes(String(value).toLowerCase());
+                    }
                     break;
                   case 'email':
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     tableRow[col.id] = emailRegex.test(String(value)) ? String(value) : '';
                     break;
                   case 'date':
-                    const date = new Date(String(value));
-                    tableRow[col.id] = isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0];
+                    {
+                      const date = new Date(value);
+                      tableRow[col.id] = date.toLocaleDateString();
+                    }
                     break;
                   case 'select':
                     tableRow[col.id] = col.options?.includes(String(value)) ? String(value) : '';
