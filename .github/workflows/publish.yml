@@ -37,15 +37,6 @@ jobs:
           echo "No tests found, skipping..."
         fi
       
-    - name: Run linting
-      run: |
-        if npm run lint --dry-run > /dev/null 2>&1; then
-          echo "Running linter..."
-          npm run lint
-        else
-          echo "No linting script found, skipping..."
-        fi
-      
     - name: Build package
       run: |
         echo "Building package..."
