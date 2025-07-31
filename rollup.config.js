@@ -7,6 +7,8 @@ import postcss from 'rollup-plugin-postcss';
 
 const packageJson = require('./package.json');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default {
   input: 'src/index.ts',
   output: [
@@ -14,36 +16,52 @@ export default {
       file: packageJson.main,
       format: 'cjs',
       sourcemap: true,
-      name: 'react-smart-table'
+      name: 'react-smart-table',
+      exports: 'named'
     },
     {
       file: packageJson.module,
       format: 'esm',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named'
     }
   ],
   plugins: [
     peerDepsExternal(),
     resolve({
       browser: true,
-      preferBuiltins: false
+      preferBuiltins: false,
+      exportConditions: ['node']
     }),
-    commonjs(),
+    commonjs({
+      include: /node_modules/
+    }),
     typescript({
       tsconfig: './tsconfig.json',
-      exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx']
+      exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
+      declaration: true,
+      declarationDir: 'dist'
     }),
     postcss({
       config: {
         path: './postcss.config.js'
       },
       extensions: ['.css'],
-      minimize: true,
+      minimize: isProduction,
       inject: {
         insertAt: 'top'
       }
     }),
-    terser()
-  ],
-  external: ['react', 'react-dom']
+    isProduction && terser({
+      compress: {
+        drop_console: true
+      }
+    })
+  ].filter(Boolean),
+  external: ['react', 'react-dom'],
+  onwarn(warning, warn) {
+    // Suppress certain warnings
+    if (warning.code === 'MISSING_GLOBAL_NAME') return;
+    warn(warning);
+  }
 };

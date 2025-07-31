@@ -54,7 +54,8 @@
   },
   "homepage": "https://github.com/ABISHEK-K-DEV/react-smart-table#readme",
   "scripts": {
-    "build": "npm run clean && rollup -c",
+    "build": "npm run clean && npm run build:rollup",
+    "build:rollup": "rollup -c",
     "dev": "rollup -c -w",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -72,7 +73,11 @@
     "example:dev": "cd examples/basic && npm run dev",
     "docs:build": "typedoc src/index.ts",
     "size": "size-limit",
-    "analyze": "rollup -c --bundleConfigAsCjs --environment ANALYZE"
+    "analyze": "rollup -c --bundleConfigAsCjs --environment ANALYZE",
+    "preinstall": "npx check-engine",
+    "postinstall": "npm run build:check",
+    "build:check": "node scripts/build-check.js",
+    "build:safe": "npm run build:check && npm run build:rollup"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -80,41 +85,41 @@
   },
   "dependencies": {
     "@tanstack/react-table": "^8.11.2",
-    "zod": "^3.22.4",
-    "papaparse": "^5.4.1",
+    "clsx": "^2.0.0",
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.303.0",
+    "papaparse": "^5.4.1",
     "react-hot-toast": "^2.4.1",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/react": "^14.1.2",
+    "@types/node": "^20.10.5",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "@types/papaparse": "^5.3.14",
-    "@types/node": "^20.10.5",
-    "typescript": "^5.3.3",
-    "rollup": "^4.9.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-typescript": "^11.1.5",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-analyzer": "^4.0.0",
-    "tailwindcss": "^3.4.0",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "rimraf": "^5.0.5",
-    "@rollup/plugin-terser": "^0.4.4",
-    "eslint": "^8.56.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/jest-dom": "^6.1.6",
+    "postcss": "^8.4.32",
+    "rimraf": "^5.0.5",
+    "rollup": "^3.29.4",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "size-limit": "^11.0.1",
-    "typedoc": "^0.25.4"
+    "tailwindcss": "^3.4.0",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.25.4",
+    "typescript": "^5.3.3"
   },
   "size-limit": [
     {
@@ -129,7 +134,8 @@
   "overrides": {
     "glob": "^10.3.10",
     "inflight": "^1.0.6",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "rollup": "^3.29.4"
   },
   "engines": {
     "node": ">=16.0.0",
@@ -142,5 +148,10 @@
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/ABISHEK-K-DEV"
+  },
+  "config": {
+    "optional-dependencies": {
+      "ignore-missing": true
+    }
   }
 }
