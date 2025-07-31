@@ -87,23 +87,6 @@ function createDistPackageJson() {
 }
 
 /**
- * Run ESLint checks
- */
-function runEslintCheck() {
-  console.log('🔍 Running ESLint checks...');
-  try {
-    execSync('npx eslint src --ext .ts,.tsx --max-warnings=0', {
-      stdio: 'inherit',
-      cwd: path.join(__dirname, '..')
-    });
-    return true;
-  } catch (error) {
-    console.error('⚠️ ESLint found issues. Please fix them before building.');
-    return false;
-  }
-}
-
-/**
  * The main build function. It creates the CJS and ESM bundles and generates type declarations.
  */
 async function build() {
@@ -112,11 +95,6 @@ async function build() {
   // Ensure the 'dist' directory exists before we start building
   if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir, { recursive: true });
-  }
-
-  // Run ESLint check first if not in CI environment
-  if (process.env.CI !== 'true' && !runEslintCheck()) {
-    console.log('⚠️ Continuing build despite ESLint issues...');
   }
 
   try {
