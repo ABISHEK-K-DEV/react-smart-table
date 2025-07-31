@@ -8,8 +8,7 @@ React Smart Table is built with security as a top priority. This document outlin
 
 We actively maintain security updates for the following versions:
 
-| Version | Supported          |
-| ------- | ------------------ |
+| Version | Supported          |- |
 | 1.x.x   | ✅ Full support    |
 | 0.x.x   | ❌ No longer supported |
 
@@ -95,7 +94,7 @@ const badConfig = {
   openaiKey: process.env.OPENAI_KEY // Still exposed!
 };
 
-// Avoid unsanitized HTML
+
 const badDisplay = <div dangerouslySetInnerHTML={{__html: userInput}} />;
 
 
@@ -113,28 +112,21 @@ For Developers Using This Package
 For Server-Side AI Integration
 
 javascript
-// Example secure server endpoint
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
-// Security middleware
+
 app.use(helmet());
 app.use(rateLimit({
   windowMs: 60 * 1000,
   max: 10
 }));
 
-// Secure AI endpoint
 app.post('/api/ai-suggestions', async (req, res) => {
-  // Validate request
   if (!req.body.column || !req.body.context) {
     return res.status(400).json({ error: 'Invalid request' });
   }
-  
-  // Sanitize input
   const sanitizedContext = sanitize(req.body.context);
-  
-  // Your AI logic here...
 });
 
 
@@ -185,6 +177,5 @@ For any security-related questions:
 - General Contact: support@abisheks238.dev
 - GitHub Issues: For non-security bugs only
 
----
 
 Thank you for helping keep React Smart Table and our users safe! 🛡️

@@ -1,17 +1,23 @@
 {
   "name": "@abisheks238/react-smart-table",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "🚀 Enterprise-grade React table with AI autofill, real-time validation, and advanced security features. Perfect for admin dashboards and data management applications.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md",
     "LICENSE",
-    "CHANGELOG.md",
-    "SECURITY.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "keywords": [
     "react",
     "table",

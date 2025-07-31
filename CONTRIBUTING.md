@@ -1,135 +1,135 @@
-# Contributing to React Smart Table
+Contributing to React Smart Table
 
 Thank you for your interest in contributing to React Smart Table! We welcome contributions from the community and are excited to see what you'll build with us.
 
-## 🌟 Ways to Contribute
+🌟 Ways to Contribute
 
-- 🐛 **Bug Reports**: Help us identify and fix issues
-- 💡 **Feature Requests**: Suggest new functionality
-- 📝 **Documentation**: Improve our docs and examples
-- 🔧 **Code**: Implement features and fix bugs
-- 🛡️ **Security**: Report vulnerabilities responsibly
-- 🧪 **Testing**: Add test coverage and improve quality
+- 🐛 Bug Reports: Help us identify and fix issues
+- 💡 Feature Requests: Suggest new functionality
+- 📝 Documentation: Improve our docs and examples
+- 🔧 Code: Implement features and fix bugs
+- 🛡️ Security: Report vulnerabilities responsibly
+- 🧪 Testing: Add test coverage and improve quality
 
-## 🚀 Getting Started
+🚀 Getting Started
 
-### Prerequisites
+Prerequisites
 
 - Node.js 16.0 or higher
 - npm 8.0 or higher
 - Git
 
-### Setup Development Environment
+Setup Development Environment
 
-1. **Fork and Clone**
-   ```bash
+1. Fork and Clone
+   bash
    git clone https://github.com/YOUR_USERNAME/react-smart-table.git
    cd react-smart-table
-   ```
+   
 
-2. **Install Dependencies**
-   ```bash
+2. Install Dependencies
+   bash
    npm install
-   ```
+   
 
-3. **Run Development Build**
-   ```bash
+3. Run Development Build
+   bash
    npm run dev
-   ```
+   
 
-4. **Run Tests**
-   ```bash
+4. Run Tests
+   bash
    npm test
-   ```
+   
 
-5. **Run Example**
-   ```bash
+5. Run Example
+   bash
    npm run example:install
    npm run example:dev
-   ```
+   
 
-## 📋 Development Guidelines
+📋 Development Guidelines
 
-### Code Style
+Code Style
 
 - Use TypeScript for all new code
 - Follow the existing coding style
 - Use Prettier for code formatting
 - Write clear, descriptive commit messages
 
-### Security First
+Security First
 
 - All user inputs must be sanitized
 - Never expose API keys in client code
 - Follow OWASP guidelines
 - Add security tests for new features
 
-### Testing Requirements
+Testing Requirements
 
 - Unit tests for all new functions
 - Integration tests for components
 - Security tests for input validation
 - Maintain >90% code coverage
 
-### Documentation
+Documentation
 
 - Update README.md for new features
 - Add JSDoc comments for all public APIs
 - Include examples in documentation
 - Update CHANGELOG.md
 
-## 🔄 Pull Request Process
+🔄 Pull Request Process
 
-### 1. Create a Branch
+1. Create a Branch
 
-```bash
+bash
 git checkout -b feature/your-feature-name
-# or
+or
 git checkout -b fix/issue-description
-```
 
-### 2. Make Your Changes
+
+2. Make Your Changes
 
 - Write clean, well-documented code
 - Add tests for new functionality
 - Ensure all tests pass
 - Update documentation as needed
 
-### 3. Test Your Changes
+3. Test Your Changes
 
-```bash
-# Run all tests
+bash
+Run all tests
 npm test
 
-# Check code style
+Check code style
 npm run lint
 
-# Type checking
+Type checking
 npm run type-check
 
-# Security audit
+Security audit
 npm run security:audit
 
-# Build package
+Build package
 npm run build
-```
 
-### 4. Commit Your Changes
+
+4. Commit Your Changes
 
 Use conventional commit format:
 
-```bash
+bash
 git commit -m "feat: add AI bulk processing feature"
 git commit -m "fix: resolve XSS vulnerability in input sanitization"
 git commit -m "docs: update API documentation"
 git commit -m "test: add security tests for file upload"
-```
 
-### 5. Push and Create PR
 
-```bash
+5. Push and Create PR
+
+bash
 git push origin feature/your-feature-name
-```
+
 
 Create a pull request with:
 - Clear title and description
@@ -138,70 +138,70 @@ Create a pull request with:
 - Test results and coverage
 - Security implications
 
-## 🐛 Bug Reports
+🐛 Bug Reports
 
 When reporting bugs, please include:
 
-```markdown
-**Bug Description**
+markdown
+Bug Description
 A clear description of what the bug is.
 
-**Steps to Reproduce**
+Steps to Reproduce
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-**Expected Behavior**
+Expected Behavior
 What you expected to happen.
 
-**Actual Behavior**
+Actual Behavior
 What actually happened.
 
-**Environment**
+Environment
 - OS: [e.g. macOS 14.0]
 - Browser: [e.g. Chrome 120]
 - React version: [e.g. 18.2.0]
 - Package version: [e.g. 1.0.0]
 
-**Additional Context**
+Additional Context
 - Error messages
 - Console logs
 - Screenshots
 - Minimal reproduction code
-```
 
-## 💡 Feature Requests
+
+💡 Feature Requests
 
 For feature requests, please include:
 
-```markdown
-**Feature Description**
+markdown
+Feature Description
 A clear description of the feature you'd like to see.
 
-**Use Case**
+Use Case
 Explain the problem this feature would solve.
 
-**Proposed Solution**
+Proposed Solution
 How you envision this feature working.
 
-**Alternatives Considered**
+Alternatives Considered
 Other approaches you've considered.
 
-**Security Considerations**
+Security Considerations
 Any security implications of this feature.
-```
 
-## 🛡️ Security Contributions
 
-### Reporting Security Issues
+🛡️ Security Contributions
 
-- **DO NOT** create public GitHub issues for security vulnerabilities
+Reporting Security Issues
+
+- DO NOT create public GitHub issues for security vulnerabilities
 - Email security@abisheks238.dev with details
 - Include steps to reproduce and potential impact
 - We'll respond within 24 hours
 
-### Security Code Guidelines
+Security Code Guidelines
 
 - Sanitize all user inputs
 - Validate data on both client and server
@@ -210,11 +210,11 @@ Any security implications of this feature.
 - Never log sensitive information
 - Use secure coding practices
 
-## 🧪 Testing Guidelines
+🧪 Testing Guidelines
 
-### Test Structure
+Test Structure
 
-```typescript
+typescript
 describe('ComponentName', () => {
   describe('Security', () => {
     it('should sanitize user input', () => {
@@ -232,73 +232,73 @@ describe('ComponentName', () => {
     });
   });
 });
-```
 
-### Test Categories
 
-1. **Unit Tests**: Individual functions and hooks
-2. **Integration Tests**: Component interactions
-3. **Security Tests**: Input validation and sanitization
-4. **Performance Tests**: Large datasets and animations
-5. **Accessibility Tests**: Screen reader and keyboard navigation
+Test Categories
 
-## 📚 Documentation Standards
+1. Unit Tests: Individual functions and hooks
+2. Integration Tests: Component interactions
+3. Security Tests: Input validation and sanitization
+4. Performance Tests: Large datasets and animations
+5. Accessibility Tests: Screen reader and keyboard navigation
 
-### Code Documentation
+📚 Documentation Standards
 
-```typescript
-/**
+Code Documentation
+
+typescript
+/
  * Sanitizes user input to prevent XSS attacks
  * @param input - Raw user input string
  * @param maxLength - Maximum allowed length (default: 1000)
  * @returns Sanitized string safe for display
  * @security This function prevents XSS by encoding HTML entities
  * @example
- * ```typescript
+ * typescript
  * const safe = sanitizeInput('<script>alert("xss")</script>');
  * // Returns: '&lt;script&gt;alert("xss")&lt;/script&gt;'
- * ```
+ * 
  */
 export const sanitizeInput = (input: string, maxLength = 1000): string => {
   // Implementation
 };
-```
 
-### README Updates
+
+README Updates
 
 - Keep examples up to date
 - Include security considerations
 - Add performance notes
 - Update feature lists
 
-## 🎯 Code Review Process
+🎯 Code Review Process
 
-### What We Look For
+What We Look For
 
-1. **Security**: No vulnerabilities introduced
-2. **Performance**: Efficient algorithms and rendering
-3. **Accessibility**: WCAG 2.1 compliance
-4. **Tests**: Comprehensive test coverage
-5. **Documentation**: Clear and complete
-6. **Breaking Changes**: Proper versioning
+1. Security: No vulnerabilities introduced
+2. Performance: Efficient algorithms and rendering
+3. Accessibility: WCAG 2.1 compliance
+4. Tests: Comprehensive test coverage
+5. Documentation: Clear and complete
+6. Breaking Changes: Proper versioning
 
-### Review Timeline
+Review Timeline
 
 - Initial review: Within 48 hours
 - Follow-up reviews: Within 24 hours
 - Security reviews: Priority handling
 
-## 📦 Release Process
+📦 Release Process
 
-### Version Numbering
+Version Numbering
 
 We follow [Semantic Versioning](https://semver.org/):
 
-- **MAJOR**: Breaking changes
-- **MINOR**: New features (backward compatible)
-- **PATCH**: Bug fixes (backward compatible)
+- MAJOR: Breaking changes
+- MINOR: New features (backward compatible)
+- PATCH: Bug fixes (backward compatible)
 
-### Release Checklist
+Release Checklist
 
 - [ ] All tests passing
 - [ ] Security audit clean
@@ -308,7 +308,7 @@ We follow [Semantic Versioning](https://semver.org/):
 - [ ] Examples working
 - [ ] Bundle size checked
 
-## 🏆 Recognition
+🏆 Recognition
 
 Contributors will be recognized in:
 
@@ -317,20 +317,20 @@ Contributors will be recognized in:
 - README.md contributors section
 - npm package credits
 
-## 📞 Questions?
+📞 Questions?
 
-- 💬 **Discussions**: Use GitHub Discussions for questions
-- 🐛 **Issues**: Use GitHub Issues for bugs
-- 📧 **Email**: support@abisheks238.dev
-- 🔒 **Security**: security@abisheks238.dev
+- 💬 Discussions: Use GitHub Discussions for questions
+- 🐛 Issues: Use GitHub Issues for bugs
+- 📧 Email: support@abisheks238.dev
+- 🔒 Security: security@abisheks238.dev
 
-## 📜 Code of Conduct
+📜 Code of Conduct
 
-### Our Pledge
+Our Pledge
 
 We pledge to make participation in our project a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-### Our Standards
+Our Standards
 
 - Using welcoming and inclusive language
 - Being respectful of differing viewpoints
@@ -338,7 +338,7 @@ We pledge to make participation in our project a harassment-free experience for 
 - Focusing on what is best for the community
 - Showing empathy towards other community members
 
-### Enforcement
+Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by emailing conduct@abisheks238.dev.
 
