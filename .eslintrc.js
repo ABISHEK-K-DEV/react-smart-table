@@ -1,7 +1,12 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
-    '@typescript-eslint/recommended',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'react'
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -9,6 +14,11 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+  },
+  env: {
+    browser: true,
+    node: true,
+    es6: true
   },
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
