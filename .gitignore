@@ -136,3 +136,26 @@ config/keys.js
 
 # Documentation builds
 docs/build/
+
+# GitHub Actions
+.github/secrets/
+
+# Editor directories and files
+.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
