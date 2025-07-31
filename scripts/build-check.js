@@ -32,8 +32,16 @@ let foundOptionalDeps = false;
 
 criticalDeps.forEach(dep => {
   try {
-    require.resolve(dep);
+    const depModule = require.resolve(dep);
     console.log(`✅ ${dep} found`);
+    
+    // Check esbuild version
+    if (dep === 'esbuild') {
+      const esbuild = require(dep);
+      if (esbuild.version && esbuild.version < '0.25.0') {
+        console.log(`⚠️ esbuild version ${esbuild.version} has security vulnerabilities. Consider upgrading to >=0.25.8`);
+      }
+    }
   } catch (error) {
     console.log(`❌ ${dep} missing`);
     mandatoryDepsFound = false;

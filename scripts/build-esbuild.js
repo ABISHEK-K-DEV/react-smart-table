@@ -27,8 +27,7 @@ const baseConfig = {
   target: ['es2020'],
   jsx: 'automatic',
   platform: 'browser',
-  mainFields: ['module', 'main'],
-  conditions: ['import', 'module', 'default'],
+  format: undefined, // Format will be set per output
   logLevel: 'info',
   minify: process.env.NODE_ENV === 'production',
 };
@@ -99,19 +98,19 @@ async function build() {
   }
 
   try {
-    // Build both the ESM and CJS versions in parallel for efficiency
-    await Promise.all([
-      esbuild.build({
-        ...baseConfig,
-        outfile: path.join(distDir, 'index.esm.js'),
-        format: 'esm',
-      }),
-      esbuild.build({
-        ...baseConfig,
-        outfile: path.join(distDir, 'index.js'),
-        format: 'cjs',
-      })
-    ]);
+    // Build both the ESM and CJS versions
+    await esbuild.build({
+      ...baseConfig,
+      outfile: path.join(distDir, 'index.esm.js'),
+      format: 'esm',
+    });
+    
+    await esbuild.build({
+      ...baseConfig,
+      outfile: path.join(distDir, 'index.js'),
+      format: 'cjs',
+    });
+    
     console.log('📦 ESM and CJS modules built.');
 
     // After the JavaScript bundles are created, generate the corresponding .d.ts files
@@ -151,36 +150,30 @@ async function watch() {
   console.log('👀 Starting watch mode...');
 
   try {
-    // Use esbuild's context API for efficient watching
-    const context = await esbuild.context({
+    // Create esbuild context for watching
+    const esmContext = await esbuild.context({
       ...baseConfig,
-      // We don't need this context to write files itself.
-      // Instead, we'll use its plugin to trigger our full `build` function,
-      // which ensures types are regenerated along with the JS bundles.
-      write: false, 
-      plugins: [{
-        name: 'rebuild-plugin',
-        setup(buildProcess) {
-          // The `onEnd` callback is triggered after each build attempt within the context
-          buildProcess.onEnd(result => {
-            if (result.errors.length > 0) {
-              console.error('❌ Watch detected build errors:', result.errors);
-            } else {
-              console.log('Changes detected. Triggering full rebuild...');
-              // We call our main build function to handle everything
-              build().catch(err => console.error('❌ Rebuild failed:', err));
-            }
-          });
-        },
-      }],
+      outfile: path.join(distDir, 'index.esm.js'),
+      format: 'esm',
     });
 
-    // Activate the watcher
-    await context.watch();
+    const cjsContext = await esbuild.context({
+      ...baseConfig,
+      outfile: path.join(distDir, 'index.js'),
+      format: 'cjs',
+    });
+
+    // Start watching
+    await Promise.all([
+      esmContext.watch(),
+      cjsContext.watch()
+    ]);
+    
     console.log('👀 Watching for changes in src/ ...');
     
-    // Perform an initial build so files are available immediately on startup
-    await build();
+    // Also generate types on startup
+    generateDeclarations();
+    createDistPackageJson();
   } catch (error) {
     console.error('❌ Watch setup failed:', error);
     process.exit(1);
