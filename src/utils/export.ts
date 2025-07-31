@@ -2,7 +2,7 @@ import Papa from 'papaparse';
 import { TableColumn, TableRow } from '../types';
 
 // Security: Input sanitization for export data
-const sanitizeForExport = (value: any): string => {
+export const sanitizeForExport = (value: any): string => {
   if (value === null || value === undefined) return '';
   
   const str = String(value);
@@ -16,7 +16,7 @@ const sanitizeForExport = (value: any): string => {
 };
 
 // Security: Validate file size and type
-const validateFile = (file: File): boolean => {
+export const validateFile = (file: File): boolean => {
   const maxSize = 50 * 1024 * 1024; // 50MB limit
   const allowedTypes = ['text/csv', 'application/vnd.ms-excel', 'text/plain'];
   

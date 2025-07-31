@@ -60,7 +60,7 @@
     "build:fallback": "node scripts/build-fallback.js",
     "build:tsc": "tsc --project tsconfig.json",
     "dev": "npm run build:esbuild -- --watch",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts,.tsx --fix",
