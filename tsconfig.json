@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,10 +13,15 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
+    "module": "ESNext",
     "declaration": true,
     "declarationMap": true,
+    "emitDeclarationOnly": false,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true
   },
   "include": [
     "src/**/*"
@@ -26,6 +31,9 @@
     "dist",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/*.stories.tsx"
+    "**/*.stories.tsx",
+    "rollup.config.js",
+    "scripts/**/*",
+    "examples/**/*"
   ]
 }

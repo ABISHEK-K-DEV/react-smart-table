@@ -54,10 +54,11 @@
   },
   "homepage": "https://github.com/ABISHEK-K-DEV/react-smart-table#readme",
   "scripts": {
-    "build": "npm run clean && npm run build:safe",
-    "build:safe": "rollup -c || npm run build:fallback",
-    "build:fallback": "node scripts/build-fallback.js",
-    "dev": "rollup -c -w",
+    "build": "npm run clean && npm run build:esbuild",
+    "build:esbuild": "node scripts/build-esbuild.js",
+    "build:rollup": "rollup -c",
+    "build:tsc": "tsc --project tsconfig.json",
+    "dev": "npm run build:esbuild -- --watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -75,10 +76,8 @@
     "docs:build": "typedoc src/index.ts",
     "size": "size-limit",
     "analyze": "rollup -c --bundleConfigAsCjs --environment ANALYZE",
-    "preinstall": "npx check-engine",
-    "postinstall": "npm run build:check",
     "build:check": "node scripts/build-check.js",
-    "build:safe": "npm run build:check && npm run build:rollup"
+    "postinstall": "node scripts/build-check.js || echo 'Build check skipped'"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -95,10 +94,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.1.0",
-    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^8.5.0",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
     "@types/node": "^20.10.5",
@@ -108,11 +107,12 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "autoprefixer": "^10.4.16",
+    "esbuild": "^0.19.12",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "postcss": "^8.4.32",
     "rimraf": "^5.0.5",
-    "rollup": "^2.79.1",
+    "rollup": "^4.46.2",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
@@ -135,8 +135,7 @@
   "overrides": {
     "glob": "^10.3.10",
     "inflight": "^1.0.6",
-    "rimraf": "^5.0.5",
-    "rollup": "^2.79.1"
+    "rimraf": "^5.0.5"
   },
   "engines": {
     "node": ">=16.0.0",

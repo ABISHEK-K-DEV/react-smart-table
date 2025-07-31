@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('🔧 Running fallback build process...');
+console.log('🔧 Running fallback TypeScript build...');
 
 // Create dist directory
 const distPath = path.join(__dirname, '..', 'dist');
@@ -16,33 +16,37 @@ const { execSync } = require('child_process');
 
 try {
   // Compile TypeScript
-  console.log('📦 Compiling TypeScript...');
-  execSync('npx tsc --outDir dist --declaration', { 
+  console.log('📝 Compiling TypeScript...');
+  execSync('npx tsc --project tsconfig.json', { 
     stdio: 'inherit',
     cwd: path.join(__dirname, '..')
   });
 
-  // Create basic package files
+  // Read package.json
   const packageJson = require('../package.json');
   
-  // Create CJS build
-  const cjsContent = `
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const indexModule = require('./index.js');
-module.exports = indexModule;
-`;
+  // Create package.json for dist
+  const distPackageJson = {
+    name: packageJson.name,
+    version: packageJson.version,
+    main: './index.js',
+    module: './index.js',
+    types: './index.d.ts',
+    exports: {
+      '.': {
+        import: './index.js',
+        require: './index.js',
+        types: './index.d.ts'
+      }
+    }
+  };
 
-  fs.writeFileSync(path.join(distPath, 'index.cjs.js'), cjsContent);
+  fs.writeFileSync(
+    path.join(distPath, 'package.json'), 
+    JSON.stringify(distPackageJson, null, 2)
+  );
 
-  // Create ESM build
-  const esmContent = `
-export * from './index.js';
-`;
-
-  fs.writeFileSync(path.join(distPath, 'index.esm.js'), esmContent);
-
-  console.log('✅ Fallback build completed successfully!');
+  console.log('✅ Fallback build completed!');
   
 } catch (error) {
   console.error('❌ Fallback build failed:', error.message);
