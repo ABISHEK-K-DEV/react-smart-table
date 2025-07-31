@@ -1,12 +1,11 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import terser from '@rollup/plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 
 const packageJson = require('./package.json');
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
@@ -30,8 +29,7 @@ export default {
     peerDepsExternal(),
     resolve({
       browser: true,
-      preferBuiltins: false,
-      exportConditions: ['node']
+      preferBuiltins: false
     }),
     commonjs({
       include: /node_modules/
@@ -60,8 +58,8 @@ export default {
   ].filter(Boolean),
   external: ['react', 'react-dom'],
   onwarn(warning, warn) {
-    // Suppress certain warnings
     if (warning.code === 'MISSING_GLOBAL_NAME') return;
+    if (warning.code === 'CIRCULAR_DEPENDENCY') return;
     warn(warning);
   }
 };
