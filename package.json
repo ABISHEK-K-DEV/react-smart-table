@@ -60,12 +60,12 @@
   },
   "homepage": "https://github.com/ABISHEK-K-DEV/react-smart-table#readme",
   "scripts": {
-    "build": "npm run clean && node scripts/build-esbuild.js || npm run build:fallback",
+    "build": "npm run clean && npm run build:rollup",
     "build:esbuild": "node scripts/build-esbuild.js",
     "build:rollup": "rollup -c",
     "build:fallback": "node scripts/build-fallback.js",
     "build:tsc": "tsc --project tsconfig.json",
-    "dev": "npm run build:esbuild -- --watch",
+    "dev": "npm run build:rollup -- --watch",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -84,8 +84,7 @@
     "docs:build": "typedoc src/index.ts",
     "size": "size-limit",
     "analyze": "esbuild src/index.ts --bundle --minify --sourcemap --analyze --outfile=dist/bundle-analyze.js || rollup -c --bundleConfigAsCjs --environment ANALYZE",
-    "build:check": "node scripts/build-check.js",
-    "postinstall": "node scripts/build-check.js || echo 'Build check skipped'"
+    "build:check": "node scripts/build-check.js"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -115,9 +114,6 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "autoprefixer": "^10.4.16",
-    "esbuild": "^0.25.8",
-    "eslint": "^8.57.1",
-    "eslint-plugin-react": "^7.37.5",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.32",
@@ -158,10 +154,7 @@
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/ABISHEK-K-DEV"
-  },
-  "config": {
-    "optional-dependencies": {
-      "ignore-missing": true
-    }
   }
 }
+
+

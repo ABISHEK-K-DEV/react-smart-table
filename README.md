@@ -1,8 +1,10 @@
-# 🔐 React Smart Table Secure AI-Powered Data Management
+🔐 React Smart Table Secure AI-Powered Data Management
 
-[![npm version](https://badge.fury.io/js/%40abisheks238%2Freact-smart-table.svg)](https://badge.fury.io/js/%40abisheks238%2Freact-smart-table)
-[![Security Rating](https://img.shields.io/badge/security-A+-green.svg)](https://github.com/ABISHEK-K-DEV/react-smart-table)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/@abisheks238/react-smart-table.svg)](https://www.npmjs.com/package/@abisheks238/react-smart-table)
+[![npm downloads](https://img.shields.io/npm/dm/@abisheks238/react-smart-table.svg)](https://www.npmjs.com/package/@abisheks238/react-smart-table)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ABISHEK-K-DEV/react-smart-table/blob/main/LICENSE)
+[![Build Status](https://github.com/ABISHEK-K-DEV/react-smart-table/actions/workflows/publish.yml/badge.svg)](https://github.com/ABISHEK-K-DEV/react-smart-table/actions)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@abisheks238/react-smart-table)](https://bundlephobia.com/package/@abisheks238/react-smart-table)
 
 A production-ready, enterprise-grade React table component with built-in AI assistance, comprehensive security features, and real-time validation.
 
@@ -230,6 +232,20 @@ Built with security-first principles
 Follows OWASP guidelines
 Enterprise-ready architecture
 
+🛠️ Automated Publishing
 
+This package is published to [npm](https://www.npmjs.com/package/@abisheks238/react-smart-table) automatically via GitHub Actions when a new version tag (e.g., `v1.0.0`) is pushed to the repository.  
+To release a new version:
+
+1. Bump the version in `package.json`
+2. Commit and push your changes
+3. Create a new annotated tag:  
+   sh
+   git tag v1.0.3
+   git push origin v1.0.3
+   
+4. GitHub Actions will build and publish the package to npm.
+
+---
 
 ⚠️ Security Notice: Always validate and sanitize data on both client and server sides. This component provides client-side security measures but should be complemented with server-side validation.
